@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
+    <script src="./test.js"></script>
+    <style>
+        .testModal {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(256, 256, 256, .5);
+            z-index: 999;
+        }
+        
+        .testClass {
+            background: blue;
+        }
+        
+        .mt_p {
+            font-size: 18px;
+            color: #333333;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body class="box">
+    <p class='mt_p'>这里加了两种抽奖效果，html和hoverClass,html是白色遮罩，hoverClass是蓝色底色，你可以自定义。<br>插件会遍历目标table的td，但不会影响td里面的内容，请保证这是一个标准的3*3的表格。</p>
+    <div class="empty">
+        <p>我要抽奖</p>
+    </div>
+    <div class="child_3">
+
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <p class="p1">+30积分</p>
+                    </td>
+                    <td>
+                        <p class="p2">茅台新酒试用券</p>
+                    </td>
+                    <td>
+                        <p class="p1">+50积分</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="p2">茅台半价通用券</p>
+                    </td>
+                    <td class="btn">
+                        <p id="go">点击抽奖</p>
+                    </td>
+                    <td>
+                        <p class="p1">+10积分</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="p1">谢谢参与</p>
+                    </td>
+                    <td>
+                        <p class="p1">+40积分</p>
+                    </td>
+                    <td>
+                        <p class="p2">茅台半价通用券</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+<script>
+    $(document).ready(function() {
+        //这是可以配置的所有参数
+        var ops = {
+            html: '<div class="testModal"></div>', //抽奖效果，添加HTML标签
+            hoverClass: 'testClass', //抽奖效果，在TD添加样式
+            startTime: 50, //起始延迟时间
+            onlyTime: 2, //延迟时间间隔
+            endTime: 500, //最后出结果的延迟时间
+            id: '#go', //抽奖按钮ID，JQ选择器语法
+            way: 'click', //按钮绑定的事件，默认点击事件
+            cycle: 3, //九宫格循环次数
+            start: 5, //九宫格起始位置
+            arr: [0, 1, 2, 5, 8, 7, 6, 3], //九宫格循环方向，默认顺时针	
+            runBefor: function() { //抽奖之前的函数，返回抽奖结果，返回false结束抽奖
+                var d = new Date();
+                d = d.getTime();
+                return d % 7;
+            }
+        };
+
+        var test = $("table").tableLottery(ops);
+        test.run(5); //也可以这样抽奖
+
+    });
+</script>
+
+</html>
